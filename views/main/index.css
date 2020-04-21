@@ -1,0 +1,80 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(203, 220, 255);
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex: 1;
+}
+
+header {
+    display: flex;
+    border-bottom: 1px solid black;
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.actions {
+    min-width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    border-left: 1px solid whitesmoke;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container > table {
+    flex: 1;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    overflow-y: auto;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    width: 500px;
+}
+
+.date {
+    min-width: 100px;
+}
+
+.from {
+    min-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.title > .text {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+th, td {
+    text-align: left;
+}

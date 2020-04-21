@@ -1,0 +1,51 @@
+<!DOCTYPE >
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="index.css" />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+    </head>
+
+    <body>
+        <header>
+            <div class="refresh icon" id="fetch-btn">
+                <i class="material-icons">refresh</i>
+                <span>Refresh</span>
+            </div>
+            <div class="stop icon" id="stop-btn">
+                <i class="material-icons">stop</i>
+                <span>Stop</span>
+            </div>
+            <div class="settings icon" id="creds-btn">
+                <i class="material-icons">settings</i>
+                <span>Settings</span>
+            </div>
+            <div class="create icon" id="creds-btn">
+                <i class="material-icons">create</i>
+                <span>Write new letter</span>
+            </div>
+        </header>
+        <main>
+            <nav class="actions"></nav>
+            <article class="container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="title">Name</th>
+                            <th class="date">Date</th>
+                            <th class="from">From</th>
+                        </tr>
+                    </thead>
+                    <tbody id="messages" class="messages">
+                    </tbody>
+                </table>
+            </article>
+        </main>
+        <script>
+            require("./index.js");
+        </script>
+    </body>
+</html>
