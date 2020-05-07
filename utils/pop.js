@@ -1,4 +1,5 @@
 const tls = require("tls");
+const net = require("net");
 const { EventEmitter } = require("events");
 const { simpleParser } = require("mailparser");
 
@@ -24,6 +25,7 @@ class PopClient extends EventEmitter {
 
     stop() {
         try {
+            this.messagesIndex = 1;
             this.socket.destroy();
         } catch (e) {}
     }
@@ -38,6 +40,47 @@ class PopClient extends EventEmitter {
         this.messagesIds = lines.map((line) => {
             const [index, id] = line.split(" ");
             return { index, id };
+        });
+    }
+
+    async authorize() {
+        await this.connect();
+        this.current = "USER";
+        this.socket.setEncoding("utf-8");
+
+        return new Promise((resolve, reject) => {
+            this.socket.on("data", (data) => {
+                const message = data.toString();
+                const [status] = message.split(" ");
+
+                switch (this.current) {
+                    case "USER":
+                        this.writeCommand(`USER ${this.login}`);
+                        if (status === STATUS.error) {
+                            reject(
+                                new Error("Internal server error")
+                            );
+                        }
+                        this.current = "PASSWORD";
+                        break;
+                    case "PASSWORD":
+                        this.writeCommand(`PASS ${this.password}`);
+                        this.current = "VERIFY_AUTH";
+                        break;
+                    case "VERIFY_AUTH":
+                        if (status === STATUS.error) {
+                            reject(
+                                new Error(
+                                    "Wrong username or password"
+                                )
+                            );
+                        }
+                        resolve({ message: "Auth success" });
+                        break;
+                    default:
+                        break;
+                }
+            });
         });
     }
 
@@ -93,32 +136,15 @@ class PopClient extends EventEmitter {
     }
 
     async getMails(existingIds = []) {
-        await this.connect();
-        this.current = "USER";
-        this.socket.setEncoding("utf-8");
+        await this.authorize();
         let chunks = "";
+        this.current = "PARSE_LIST";
+        this.writeCommand("UIDL");
 
         this.socket.on("data", (data) => {
             const message = data.toString();
-            console.log(data);
 
             switch (this.current) {
-                case "USER":
-                    this.writeCommand(`USER ${this.login}`);
-                    this.current = "PASSWORD";
-                    break;
-                case "PASSWORD":
-                    this.writeCommand(`PASS ${this.password}`);
-                    this.current = "UIDL";
-                    break;
-                case "LIST":
-                    this.writeCommand(`LIST`);
-                    this.current = "UIDL";
-                    break;
-                case "UIDL":
-                    this.writeCommand(`UIDL`);
-                    this.current = "PARSE_LIST";
-                    break;
                 case "PARSE_LIST":
                     chunks += message;
                     if (this.isEndOfMessage(message)) {
@@ -127,7 +153,6 @@ class PopClient extends EventEmitter {
                             new Set(this.messagesIds),
                             new Set(existingIds)
                         );
-                        console.log(this.difference);
                         chunks = "";
                         this.retriveNextMessage();
                     }

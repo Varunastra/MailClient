@@ -28,18 +28,28 @@ header {
 }
 
 .actions {
-    min-width: 20%;
+    min-width: 150px;
     display: flex;
     flex-direction: column;
+    padding: 5px 0;
+}
+
+.inbox, .outbox {
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+    cursor: pointer;
 }
 
 .container {
     border-left: 1px solid whitesmoke;
     width: 100%;
-    height: 100%;
+    height: 700px;
     padding: 5px 10px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .container > table {
@@ -47,22 +57,21 @@ header {
     border: 0;
     border-spacing: 0;
     border-collapse: collapse;
-    overflow-y: auto;
 }
 
-.title {
+.message .title {
     display: flex;
     align-items: center;
     width: 100%;
     width: 500px;
 }
 
-.date {
-    min-width: 100px;
+.message .date {
+    width: 150px;
 }
 
-.from {
-    min-width: 200px;
+.message .from {
+    max-width: 200px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -77,4 +86,61 @@ header {
 
 th, td {
     text-align: left;
+}
+
+.mail {
+    display: flex;
+    flex-direction: column;
+    display: none;
+    height: 100%;
+}
+
+.mail div {
+    padding: 5px 0;
+}
+
+.mail > .back {
+    cursor: pointer;
+}
+
+.write-mail {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.write-mail input, .write-mail textarea {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.write-mail textarea { 
+    min-height: 450px;
+}
+
+.write-mail > div {
+    width: 100%;
+    padding: 5px;
+}
+
+.write-mail > button {
+    min-width: 200px;
+    margin-top: 20px;
+}
+
+.messages > .message {
+    cursor: pointer;
+}
+
+#outbox_table {
+    display: none;
+}
+
+#stop-btn {
+    display: none;
+}
+
+#message {
+    flex: 1;
 }

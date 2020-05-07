@@ -23,15 +23,22 @@
                 <i class="material-icons">settings</i>
                 <span>Settings</span>
             </div>
-            <div class="create icon" id="creds-btn">
+            <div class="create icon" id="write-mail-btn">
                 <i class="material-icons">create</i>
                 <span>Write new letter</span>
             </div>
         </header>
         <main>
-            <nav class="actions"></nav>
-            <article class="container">
-                <table>
+            <nav class="actions">
+                <div class="inbox">
+                    <i class="material-icons">inbox</i>Inbox
+                </div>
+                <div class="outbox">
+                    <i class="material-icons">drafts</i>Outbox
+                </div>
+            </nav>
+            <article class="container" id="container">
+                <table id="messages_table">
                     <thead>
                         <tr>
                             <th class="title">Name</th>
@@ -39,9 +46,41 @@
                             <th class="from">From</th>
                         </tr>
                     </thead>
-                    <tbody id="messages" class="messages">
-                    </tbody>
+                    <tbody id="inbox_messages" class="messages"></tbody>
                 </table>
+                <div class="mail">
+                    <span class="material-icons back">keyboard_backspace</span>
+                    <div id="title" class="title"></div>
+                    <div id="time" class="time"></div>
+                    <div id="sender" class="from"></div>
+                    <iframe id="message" class="message"></iframe>
+                </div>
+                <form class="write-mail">
+                    <div class="title">
+                        <label for="title">Enter message title</label>
+                        <input type="text" id="title" />
+                    </div>
+                    <div class="to">
+                        <label for="reciever">Enter message reciever</label>
+                        <input type="text" id="reciever" />
+                    </div>
+                    <div class="message">
+                        <label for="message">Enter message body</label>
+                        <textarea id="body"></textarea>
+                    </div>
+                    <button type="submit">Send</button>
+                </form>
+                <table id="outbox_table">
+                    <thead>
+                        <tr>
+                            <th class="title">Name</th>
+                            <th class="date">Date</th>
+                            <th class="from">To</th>
+                        </tr>
+                    </thead>
+                    <tbody id="outbox_messages" class="messages"></tbody>
+                </table>
+                </div>
             </article>
         </main>
         <script>
