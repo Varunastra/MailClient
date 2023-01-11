@@ -9,7 +9,7 @@
     "electron-rebuild": "^1.10.1",
     "electron-store": "^5.1.1",
     "javascript-state-machine": "^3.1.0",
-    "knex": "^0.21.0",
+    "knex": "^2.4.0",
     "mailparser": "^2.7.7",
     "sqlite3": "^4.1.1"
   },
